@@ -1,0 +1,172 @@
+.App {
+  justify-content: center;
+  text-align: center;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+h1 {
+  font-size: 100px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+  height: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 0 0;
+  border-bottom: 1px solid;
+  border-color: #B8B8B8;
+  border-radius: 2px;
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+
+.profilepic {
+  width: 18%; 
+  height: auto;
+  border-style: solid;
+  border-radius: 10px;
+  float: left;
+  box-shadow: 5px 5px 5px #888888;
+}
+
+.text {
+  width: 600px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+ul{
+  padding-right: 40px;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Barlow+Condensed');
+.name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 50px;
+  line-height: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
+.author{
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.genre {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 20px;
+  font-style: italic;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.price {
+  height: 60px;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 50px;
+  text-align: initial;
+  line-height: 50px;
+  padding-top: 5px;
+  margin-bottom: 10px;
+}
+@import url('https://fonts.googleapis.com/css?family=Barlow');
+button{
+  font-family: 'Barlow', sans-serif;
+  width: 15vw;
+  height: 50px;
+/*  font-weight: bold;
+*/  font-size: 20px;
+  color: #000000;
+  background-color: #E8780C;
+  border-radius: 20px;
+  border-width: 0;
+  box-shadow: 5px 5px 5px #000000;
+
+
+}
+
+li{ 
+  text-align: left;
+  width: 100%;
+  align-items: center;
+  list-style-type: none;
+}
+
+input {
+  border-radius: 7px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 30%;
+  font-style: italic;
+  text-align: center;
+  border-width: 0;
+  box-shadow: 5px 5px 5px #888888;
+  border-width: 0.1px;
+
+}
+
+.btn {
+  background-color: white;
+  box-shadow: 5px 5px 5px #888888;
+  border-width: 0.1px;
+  border-radius: 7px;
+
+}
+
+.dropdownContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-bottom: 20px;
+}
+
+.dropdown{
+  width: 30vw;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 17px;
+  /*margin-left: 10px;
+  margin-right: 10px;*/
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.App-container {
+
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
