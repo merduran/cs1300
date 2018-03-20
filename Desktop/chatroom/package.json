@@ -1,0 +1,20 @@
+{
+  "name": "chatroom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Murat Erduran",
+  "license": "ISC",
+  "dependencies": {
+    "any-db-sqlite3": "^2.1.4",
+    "body-parser": "^1.18.2",
+    "consolidate": "^0.15.0",
+    "express": "^4.16.2",
+    "fetch": "^1.1.0",
+    "hogan.js": "^3.0.2",
+    "mustache": "^2.3.0"
+  }
+}

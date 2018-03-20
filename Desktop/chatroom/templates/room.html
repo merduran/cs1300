@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="roomID" content="{{roomID}}">
+ 	<script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
+	<title>Chatroom - {{roomID}}</title>
+	<script 
+		src="https://code.jquery.com/jquery-3.1.1.min.js" 
+		integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" 
+		crossorigin="anonymous">
+	</script>
+	<style>
+	#messageList{
+		background-color: green;
+	}
+
+	#messageContainer {
+		background-color: red;
+		padding: 10px;
+		width: 200px;
+		line-height: 20px;
+		word-wrap: break-word;
+
+	}
+
+	#usernameContainer {
+		background-color: blue;
+		font-size: 12px;
+		font-weight: bold;
+	}
+
+	#bodyContainer {
+		background-color: green;
+		font-size: 15px;
+	}
+
+	#usernameContainer, #bodyContainer {
+		margin-bottom: 10px;
+	}
+
+	#timeContainer {
+		background-color: yellow;
+		text-align: right;
+		font-size: 12px;
+	}
+	</style>
+	</head>
+	 <body id="body">
+		<ul id="messageList"></ul>
+		<form id="usernameForm" onsubmit="return sendForm();">
+			<input id="usernameInput" type="text" placeholder="Enter username" oninput="displaySubmitButton()">
+			<script type="text/javascript">
+				var display = true;
+				var username = true;
+				function displaySubmitButton(){
+					if ($('#usernameInput').val().length > 0){
+						if (display){
+							$('#usernameForm').append("<Button id='usernameSubmit'>Submit Username</Button>");
+							display = false;
+						}
+					}
+					setInterval(function(){
+						if ($('#usernameInput').val().length === 0) {
+							console.log("ANNEN");
+							$('#usernameSubmit').remove();
+							display = true;
+						}
+					}, 100);
+				}
+				function clearMessages(){
+					var messageList = document.getElementById("messageList");
+					while (messageList.lastChild) {
+						messageList.removeChild(messageList.lastChild);
+					}
+				}
+
+				function renderMessages(data){
+					for (var i = 0; i < data.length; i++){
+				   		var messageContainer = $('<div></div>');
+				   		messageContainer.attr('id', 'messageContainer');
+						var usernameContainer = $('<div></div>');
+						usernameContainer.attr('id', 'usernameContainer');
+						usernameContainer.text(data[i].username);
+						var bodyContainer = $('<div></div>');
+						bodyContainer.attr('id', 'bodyContainer');
+						bodyContainer.text(data[i].body);
+						var timeContainer = $('<div></div>');
+						timeContainer.attr('id', 'timeContainer');
+						timeContainer.text(data[i].time);
+						messageContainer.append(usernameContainer);
+						messageContainer.append(bodyContainer);
+						messageContainer.append(timeContainer);
+							      $('#messageList').prepend(messageContainer);
+					   		}
+					   	}
+						function myFunction(){
+							var body =  document.getElementById("messageInput").value;
+							var time = new Date();
+							// console.log("data = ", data);
+							var messageContainer = $('<div></div>');
+					   		messageContainer.attr('id', 'messageContainer');
+						    var usernameContainer = $('<div></div>');
+						    usernameContainer.attr('id', 'usernameContainer');
+					        usernameContainer.text('{{username}}');
+			  	    	    var bodyContainer = $('<div></div>');
+						    bodyContainer.attr('id', 'bodyContainer');
+						    bodyContainer.text(body);
+						    var timeContainer = $('<div></div>');
+						    timeContainer.attr('id', 'timeContainer');
+						    timeContainer.text(time);
+						    messageContainer.append(usernameContainer);
+						    messageContainer.append(bodyContainer);
+						    messageContainer.append(timeContainer);
+						    $('#messageList').prepend(messageContainer);
+						}
+
+				function sendForm(){
+					if (username){
+						$('#usernameSubmit').remove();
+						$('#usernameInput').remove();
+						$('#usernameForm').append('<input type="text" placeholder="ANNEN" onsubmit="console.log("ANNEN");"><br>');
+						$('#usernameForm').append('<input type="hidden" name="username" value="{{username}}"><br>');
+						$('#usernameForm').append('<input type="submit" value="Submit">');
+						username = false;
+					} else {
+						console.log("roomID is = ", '{{roomID}}');
+				 		$.post('http://localhost:7000/chatroom/{{roomID}}/messages', {roomID: '{{roomID}}'})
+				 		.done(function( data ) {
+			    			renderMessages(data);
+			 			});
+
+						setInterval(function(){
+							$.post('http://localhost:7000/chatroom/{{roomID}}/messages', {roomID: '{{roomID}}'})
+					 		.done(function( data ) {
+					 			clearMessages();
+				    			renderMessages(data);
+				 			});
+							// $.get('http://localhost:7000/chatroom/{{roomID}}/messages', function(data){
+							// 	for (var i = 0; i < data.length; i++){
+							// 		console.log("data = ", data[i]);
+							// 	}
+						 //   		clearMessages();
+						 //   		renderMessages(data);
+						 //   	});
+						}, 3000);
+					}
+					// $('#usernameForm').append('<form></form>');
+					return false;
+				}
+			</script>
+
+		</form>
+		<!-- <form action="/chatroom/{{roomID}}" id="form" method="post" onsubmit="myFunction()">
+
+			<input id="messageInput" type="text" name="body">
+			<input type="hidden" name="username" value="{{username}}">
+			<input type="submit" value="Submit">
+			<script type="text/javascript">
+				console.log("roomID is = ", '{{roomID}}');
+		 		$.post('http://localhost:7000/chatroom/{{roomID}}/messages', {roomID: '{{roomID}}'})
+		 		.done(function( data ) {
+	    			renderMessages(data);
+	 			});
+
+				setInterval(function(){
+					$.post('http://localhost:7000/chatroom/{{roomID}}/messages', {roomID: '{{roomID}}'})
+			 		.done(function( data ) {
+			 			clearMessages();
+		    			renderMessages(data);
+		 			});
+					// $.get('http://localhost:7000/chatroom/{{roomID}}/messages', function(data){
+					// 	for (var i = 0; i < data.length; i++){
+					// 		console.log("data = ", data[i]);
+					// 	}
+				 //   		clearMessages();
+				 //   		renderMessages(data);
+				 //   	});
+				}, 3000);
+
+				function clearMessages(){
+					var messageList = document.getElementById("messageList");
+					while (messageList.lastChild) {
+						messageList.removeChild(messageList.lastChild);
+					}
+				}
+
+			   	function renderMessages(data){
+			   		for (var i = 0; i < data.length; i++){
+				   		  var messageContainer = $('<div></div>');
+				   		  messageContainer.attr('id', 'messageContainer');
+					      var usernameContainer = $('<div></div>');
+					      usernameContainer.attr('id', 'usernameContainer');
+					      usernameContainer.text(data[i].username);
+					      var bodyContainer = $('<div></div>');
+					      bodyContainer.attr('id', 'bodyContainer');
+					      bodyContainer.text(data[i].body);
+					      var timeContainer = $('<div></div>');
+					      timeContainer.attr('id', 'timeContainer');
+					      timeContainer.text(data[i].time);
+					      messageContainer.append(usernameContainer);
+					      messageContainer.append(bodyContainer);
+					      messageContainer.append(timeContainer);
+					      $('#messageList').prepend(messageContainer);
+			   		}
+			   	}
+				function myFunction(){
+					var body =  document.getElementById("messageInput").value;
+					var time = new Date();
+					// console.log("data = ", data);
+					var messageContainer = $('<div></div>');
+			   		messageContainer.attr('id', 'messageContainer');
+				    var usernameContainer = $('<div></div>');
+				    usernameContainer.attr('id', 'usernameContainer');
+			        usernameContainer.text('{{username}}');
+	  	    	    var bodyContainer = $('<div></div>');
+				    bodyContainer.attr('id', 'bodyContainer');
+				    bodyContainer.text(body);
+				    var timeContainer = $('<div></div>');
+				    timeContainer.attr('id', 'timeContainer');
+				    timeContainer.text(time);
+				    messageContainer.append(usernameContainer);
+				    messageContainer.append(bodyContainer);
+				    messageContainer.append(timeContainer);
+				    $('#messageList').prepend(messageContainer);
+				}
+			</script>
+		</form> -->
+	</body>
+</html>

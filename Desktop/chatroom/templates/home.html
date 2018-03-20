@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chatroom - Home Page</title>
+	<script src="../../chatroom/server.js"></script>
+	<script
+	  src="https://code.jquery.com/jquery-3.1.1.min.js"
+	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	  crossorigin="anonymous">
+	</script>
+</head>
+<body>
+	<ul id="form">
+		<Button onclick="$.ajax({ method: 'POST', url: '/' });">Start New Session</Button><br>
+		<Button onclick="querySessionID()">Join Existing Session</Button><br>
+		<script type="text/javascript">
+			console.log("ADDAAM");
+			var query = true;
+			var display = true;
+			function displaySubmitButton(){
+				if ($('#sessionID').val().length > 0){
+					if (display){
+						$('#form').append("<Button id='sessionSubmitButton' name='roomID' onclick='submitSessionID()'>Submit Session ID</Button>");
+						display = false;
+					}
+				}
+				setInterval(function(){
+					if ($('#sessionID') !== 'undefined'){
+						if ($('#sessionID').val().length === 0) {
+							$('#sessionSubmitButton').remove();
+							display = true;
+						}
+					}
+				}, 100);
+			}
+
+			function querySessionID(){
+				if (query){
+					$('#form').append("<input type='text' id='sessionID' placeholder='Enter Session ID' oninput='displaySubmitButton()'><br>");
+					query = false;
+				}
+				if ($('#sessionID').value){
+					if (display){
+						$('#form').append("<Button>Start New Session</Button>");
+						display = false;
+					}
+				} else {
+					display = true;
+				}
+			}
+
+
+			function submitSessionID(){
+				$.ajax({
+					method: "POST",
+					url: "/",
+					data: { roomID: $('#sessionID').val() },
+				});
+			}
+		</script>
+	</ul>
+</body>
+</html>
